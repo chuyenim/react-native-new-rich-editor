@@ -211,6 +211,44 @@ function createHTML(options = {}) {
             }
         }
 
+        function pasteHtmlAtCaret(html) {
+            var sel, range;
+            if (window.getSelection) {
+                // IE9 and non-IE
+                sel = window.getSelection();
+                if (sel.getRangeAt && sel.rangeCount) {
+                    range = sel.getRangeAt(0);
+                    range.deleteContents();
+
+                    // Range.createContextualFragment() would be useful here but is
+                    // only relatively recently standardized and is not supported in
+                    // some browsers (IE9, for one)
+                    var el = document.createElement("div");
+                    el.innerHTML = html;
+                    var frag = document.createDocumentFragment(), node, lastNode;
+                    while ( (node = el.firstChild) ) {
+                        lastNode = frag.appendChild(node);
+                    }
+                    var firstNode = frag.firstChild;
+                    range.insertNode(frag);
+                    
+                    // Preserve the selection
+                    if (lastNode) {
+                        range = range.cloneRange();
+                        range.setStartAfter(lastNode);
+                        range.collapse(true);
+                        sel.removeAllRanges();
+                        sel.addRange(range);
+                    }
+                }
+            } else if ( (sel = document.selection) && sel.type != "Control") {
+                // IE < 9
+                var originalRange = sel.createRange();
+                originalRange.collapse(true);
+                sel.createRange().pasteHTML(html);
+            }
+        }
+
         var _keyDown = false;
         function handleChange (event){
             var node = anchorNode;
@@ -297,6 +335,14 @@ function createHTML(options = {}) {
                 result: function (html){
                     if (html){
                         exec('insertHTML', html);
+                        Actions.UPDATE_HEIGHT();
+                    }
+                }
+            },
+            rawhtml: {
+                result: function (html){
+                    if (html){
+                        pasteHtmlAtCaret(html);
                         Actions.UPDATE_HEIGHT();
                     }
                 }

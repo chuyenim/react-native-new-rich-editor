@@ -354,6 +354,10 @@ export default class RichTextEditor extends Component {
         this.sendAction(actions.insertHTML, 'result', html);
     }
 
+    insertRawHTML(html) {
+        this.sendAction(actions.insertRawHTML, 'result', html);
+    }
+
     insertLink(title, url) {
         if (url) {
             this.showAndroidKeyboard();
