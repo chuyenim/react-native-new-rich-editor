@@ -415,12 +415,13 @@ function createHTML(options = {}) {
             },
 
             init: function (){
-                setInterval(Actions.UPDATE_HEIGHT, 150);
+                // setInterval(Actions.UPDATE_HEIGHT, 150);
                 Actions.UPDATE_HEIGHT();
             },
 
             UPDATE_HEIGHT: function() {
-                var height = Math.max(docEle.scrollHeight, body.scrollHeight);
+                // var height = Math.max(docEle.scrollHeight, body.scrollHeight);
+                var height = body.scrollHeight;
                 if (o_height !== height){
                     _postMessage({type: 'OFFSET_HEIGHT', data: o_height = height});
                 }
@@ -574,6 +575,15 @@ function createHTML(options = {}) {
             });
             return {content, paragraphSeparator: paragraphSeparator};
         };
+
+        // create an Observer instance
+        const resizeObserver = new ResizeObserver(entries => {
+                console.log('Body height changed:', entries[0].target.clientHeight);
+                Actions.UPDATE_HEIGHT();
+        });
+
+        // start observing a DOM node
+        resizeObserver.observe(document.body);
 
         var _handleCTime = null;
         editor = init({
