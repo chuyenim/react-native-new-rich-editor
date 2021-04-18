@@ -1,7 +1,7 @@
 # React Native Rich Text Editor
 
 
-[![NPM](https://img.shields.io/npm/v/react-native-pell-rich-editor.svg)](https://www.npmjs.com/package/react-native-pell-rich-editor)
+[![NPM](https://img.shields.io/npm/v/react-native-pell-rich-editor.svg)](https://www.npmjs.com/package/react-native-new-rich-editor)
 
 ------
 
@@ -11,9 +11,9 @@
 > If you want to use **flutter**, you can check [here](https://github.com/wxik/flutter-rich-editor) to add **flutter_rich_editor**
 
 ```
-yarn add react-native-pell-rich-editor
+yarn add react-native-new-rich-editor
 or
-npm i react-native-pell-rich-editor
+npm i react-native-new-rich-editor
 ```
 
 Also, follow instructions [here](https://github.com/react-native-community/react-native-webview) to add the native `react-native-webview` dependency.
