@@ -578,7 +578,7 @@ function createHTML(options = {}) {
 
         // create an Observer instance
         const resizeObserver = new ResizeObserver(entries => {
-                console.log('Body height changed:', entries[0].target.clientHeight);
+                // console.log('Body height changed:', entries[0].target.clientHeight);
                 Actions.UPDATE_HEIGHT();
         });
 
